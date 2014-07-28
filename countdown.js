@@ -54,6 +54,10 @@
       { pattern: "{seconds}", secs: 1 }
     ];
 
+    if (typeof this.conf.dateEnd === "number") {
+      this.conf.dateEnd = new Date().getTime() + this.conf.dateEnd;
+    }
+
     // Doing all the things!
     if (this.initialize !== false) {
       this.initialize();
