@@ -27,8 +27,8 @@
       selector     : ".timer",
 
       // Messages
-      msgBefore    : "Be ready!",
-      msgAfter     : "It's over, sorry folks!",
+      msgBefore    : null,
+      msgAfter     : null,
       msgPattern   : "{days} days, {hours} hours, {minutes} minutes and {seconds} seconds left.",
 
       // Callbacks
@@ -161,9 +161,11 @@
   Countdown.prototype.outOfInterval = function () {
     var message = new Date() < this.conf.dateStart ? this.conf.msgBefore : this.conf.msgAfter;
 
-    for (var d = 0; d < this.selector.length; d++) {
-      if (this.selector[d].innerHTML !== message) {
-        this.selector[d].innerHTML = message;
+    if (message) {
+      for (var d = 0; d < this.selector.length; d++) {
+        if (this.selector[d].innerHTML !== message) {
+          this.selector[d].innerHTML = message;
+        }
       }
     }
   };
