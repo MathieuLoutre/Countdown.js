@@ -42,6 +42,7 @@
 
     // Private variables
     this.started = false;
+    this.timer = null;
     this.selector = document.querySelectorAll(this.conf.selector);
     this.interval = 1000;
     this.patterns = [
@@ -90,8 +91,7 @@
   // Running the countdown
   Countdown.prototype.run = function () {
     var that = this,
-        sec  = Math.abs(this.seconds(this.conf.dateEnd) - this.seconds(new Date())),
-        timer;
+        sec  = Math.abs(this.seconds(this.conf.dateEnd) - this.seconds(new Date()));
 
     // Initial display before first tick
     if (this.isStarted()) {
@@ -104,14 +104,12 @@
     }
 
     // Vanilla JS alternative to $.proxy
-    timer = global.setInterval(function () {
+    this.timer = global.setInterval(function () {
       sec--;
 
       // Time over
       if (sec <= 0) {
-        global.clearInterval(timer);
-        that.outOfInterval();
-        that.callback("end");
+        that.stop(true);
       }
 
       else if (that.isStarted()) {
@@ -165,6 +163,15 @@
       if (this.selector[d].innerHTML !== message) {
         this.selector[d].innerHTML = message;
       }
+    }
+  };
+
+  Countdown.prototype.stop = function (complete) {
+    global.clearInterval(this.timer);
+
+    if (complete) {
+      this.outOfInterval();
+      this.callback("end");
     }
   };
 
