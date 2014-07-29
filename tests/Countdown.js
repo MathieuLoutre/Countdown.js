@@ -40,9 +40,9 @@
         dateEnd: new Date(d.getTime() + 10000)
       });
 
-      expect(document.getElementsByClassName('timer')[0].innerHTML).not.toBe("It's over, sorry folks!");
+      expect(document.getElementsByClassName('timer')[0].innerHTML).not.toBe("0 days, 0 hours, 0 minutes and 0 seconds left.");
       jasmine.Clock.tick(10000);
-      expect(document.getElementsByClassName('timer')[0].innerHTML).toBe("It's over, sorry folks!");
+      expect(document.getElementsByClassName('timer')[0].innerHTML).toBe("0 days, 0 hours, 0 minutes and 0 seconds left.");
     });
 
     it('tests output display', function() {
@@ -70,7 +70,7 @@
         dateEnd: new Date(d.getTime() + 20000)
       });
 
-      expect(document.getElementsByClassName('timer')[0].innerHTML).toBe("Be ready!");
+      expect(document.getElementsByClassName('timer')[0].innerHTML).toBe("");
     });
 
     it('tests start event', function() {
