@@ -134,5 +134,57 @@
       expect(tmp.g).toHaveBeenCalled();
       expect(tmp.jqueryEnd).toHaveBeenCalled();
     });
+
+    it('tests stop without complete', function() {
+      jasmine.Clock.useMock();
+
+      var d = new Date();
+      var tmp = {
+        g: function() {},
+        jqueryEnd: function() {}
+      };
+      spyOn(tmp, 'g');
+      spyOn(tmp, 'jqueryEnd');
+
+      $('.timer').on('countdownEnd', tmp.jqueryEnd);
+      var countdown = new Countdown({
+        dateStart: new Date(d.getTime() + 1000),
+        dateEnd: new Date(d.getTime() + 10000),
+        onEnd: tmp.g
+      });
+
+      expect(tmp.g).not.toHaveBeenCalled();
+      jasmine.Clock.tick(9000);
+      expect(tmp.g).not.toHaveBeenCalled();
+      countdown.stop()
+      expect(tmp.g).not.toHaveBeenCalled();
+      expect(tmp.jqueryEnd).not.toHaveBeenCalled();
+    });
+
+    it('tests stop with complete', function() {
+      jasmine.Clock.useMock();
+
+      var d = new Date();
+      var tmp = {
+        g: function() {},
+        jqueryEnd: function() {}
+      };
+      spyOn(tmp, 'g');
+      spyOn(tmp, 'jqueryEnd');
+
+      $('.timer').on('countdownEnd', tmp.jqueryEnd);
+      var countdown = new Countdown({
+        dateStart: new Date(d.getTime() + 1000),
+        dateEnd: new Date(d.getTime() + 10000),
+        onEnd: tmp.g
+      });
+
+      expect(tmp.g).not.toHaveBeenCalled();
+      jasmine.Clock.tick(9000);
+      expect(tmp.g).not.toHaveBeenCalled();
+      countdown.stop(true)
+      expect(tmp.g).toHaveBeenCalled();
+      expect(tmp.jqueryEnd).toHaveBeenCalled();
+    });
   });
 }());
