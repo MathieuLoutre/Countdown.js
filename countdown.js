@@ -163,7 +163,7 @@
   Countdown.prototype.outOfInterval = function () {
     var message = new Date() < this.conf.dateStart ? this.conf.msgBefore : this.conf.msgAfter;
 
-    if (message) {
+    if (message !== null) {
       for (var d = 0; d < this.selector.length; d++) {
         if (this.selector[d].innerHTML !== message) {
           this.selector[d].innerHTML = message;
