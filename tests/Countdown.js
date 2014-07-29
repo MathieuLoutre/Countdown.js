@@ -45,6 +45,17 @@
       expect(document.getElementsByClassName('timer')[0].innerHTML).toBe("It's over, sorry folks!");
     });
 
+    it('tests number as dateEnd', function() {
+      var d = new Date();
+
+     var countdown = new Countdown({
+        dateStart: d,
+        dateEnd: 10000
+      });
+
+     expect(countdown.conf.dateEnd.getTime()).toBe(countdown.conf.dateStart.getTime() + 10000);
+    });
+
     it('tests output display', function() {
       jasmine.Clock.useMock();
 

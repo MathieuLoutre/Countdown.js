@@ -55,7 +55,7 @@
     ];
 
     if (typeof this.conf.dateEnd === "number") {
-      this.conf.dateEnd = new Date().getTime() + this.conf.dateEnd;
+      this.conf.dateEnd = new Date(this.conf.dateStart.getTime() + this.conf.dateEnd);
     }
 
     // Doing all the things!
