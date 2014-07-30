@@ -2,7 +2,7 @@
   "use strict";
 
   // Vanilla JS alternative to $.extend
-  global.extend = function (obj, extObj) {
+  var extend = function (obj, extObj) {
     obj = obj || {};
     if (arguments.length > 2) {
       for (var a = 1; a < arguments.length; a++) {
@@ -16,9 +16,14 @@
     return obj;
   };
 
+   // Capitalize helper
+  var capitalize = function (string) {
+     return string.charAt(0).toUpperCase() + string.slice(1);
+   };
+
   // Countdown constructor
   var Countdown = function (conf) {
-    this.conf = global.extend({
+    this.conf = extend({
       // Dates
       dateStart    : new Date(),
       dateEnd      : new Date(new Date().getTime() + (24 * 60 * 60 * 1000)),
@@ -183,7 +188,7 @@
 
   // Dealing with events and callbacks
   Countdown.prototype.callback = function (event) {
-    var e = event.capitalize();
+    var e = capitalize(event);
 
     // onStart callback
     if (typeof this.conf["on" + e] === "function") {
@@ -194,11 +199,6 @@
     if (typeof global.jQuery !== "undefined") {
       global.jQuery(this.conf.selector).trigger("countdown" + e);
     }
-  };
-
-  // Adding a capitalize method to String
-  String.prototype.capitalize = function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
   };
 
   global.Countdown = Countdown;
